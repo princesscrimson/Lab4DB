@@ -1,0 +1,23 @@
+
+
+WITH Sub_CTE AS
+(SELECT Subcategory, Sum(OrderQty) as SumQty, Sum(LineTotal) as SumValue FROM vProductSales 
+GROUP BY Subcategory)
+
+
+SELECT Subcategory from Sub_CTE
+WHERE SumQty = (SELECT MAX(SumQty) FROM Sub_CTE) OR SumValue = (SELECT MAX(SumValue) FROM Sub_CTE);
+
+
+WITH Cat_CTE AS
+(SELECT Category, Sum(OrderQty) as SumQty, Sum(LineTotal) as SumValue FROM vProductSales 
+GROUP BY Category)
+
+
+SELECT Category from Cat_CTE
+WHERE SumQty = (SELECT MAX(SumQty) FROM Cat_CTE) OR SumValue = (SELECT MAX(SumValue) FROM Cat_CTE);
+
+
+
+
+
